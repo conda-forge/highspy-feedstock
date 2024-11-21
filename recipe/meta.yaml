@@ -1,19 +1,20 @@
 {% set name = "highspy" %}
-{% set version = "1.7.2" %}
+{% set version = "1.8.1" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/highspy-{{ version }}.tar.gz
-  sha256: 7987b2a3f013254a1845bceb4597087da4070f7887c0084024649486321ae213
+  # url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/highspy-{{ version }}.tar.gz
+  url: https://github.com/ERGO-Code/HiGHS/archive/refs/tags/v{{ version }}.tar.gz
+  sha256: a0d09371fadb56489497996b28433be1ef91a705e3811fcb1f50a107c7d427d1
   patches:
     - patches/0001-Got-error-about-missing-std-tolower-on-MSVC.patch
 
 build:
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  number: 6
+  number: 0
   ignore_run_exports:
     - numpy
 
