@@ -6,7 +6,7 @@ package:
   version: {{ version }}
 
 source:
-  # url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/highspy-{{ version }}.tar.gz
+  # url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/highspy-{{ version }}.tar.gz
   url: https://github.com/ERGO-Code/HiGHS/archive/refs/tags/v{{ version }}.tar.gz
   sha256: a0d09371fadb56489497996b28433be1ef91a705e3811fcb1f50a107c7d427d1
   patches:
@@ -41,13 +41,12 @@ requirements:
 test:
   files:
     - tests
+  requires:
+    - pip
   imports:
     - highspy
   commands:
     - python -m unittest tests/test_highspy.py
-  requires:
-    - pip
-  commands:
     - pip check
 
 about:
