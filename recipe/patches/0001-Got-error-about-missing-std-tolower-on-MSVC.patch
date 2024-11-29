@@ -1,4 +1,4 @@
-From 834cb5262f2b69f421638d5ac1e7213e149cc378 Mon Sep 17 00:00:00 2001
+From 149e79fb7b3dc87a71a3e302b5f4d75750259d1f Mon Sep 17 00:00:00 2001
 From: Adam Ehlers Nyholm Thomsen <aen@atp.dk>
 Date: Mon, 5 Aug 2024 14:59:43 +0200
 Subject: [PATCH] Got error about missing std::tolower on MSVC
