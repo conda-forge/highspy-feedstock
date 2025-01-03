@@ -16,7 +16,7 @@ Documentation: https://ergo-code.github.io/HiGHS/stable/
 HiGHS is a high performance serial and parallel solver for large scale
 sparse linear optimization problems of the form
 
-min Â½ xáµ€ Q x + cáµ€ x     s.t. L â‰¤ Ax â‰¤ U; l â‰¤ x â‰¤ u
+min ½ xᵀ Q x + cᵀ x     s.t. L ≤ Ax ≤ U; l ≤ x ≤ u
 
 where Q must be positive semi-definite and, if Q is zero, there may be a
 requirement that some of the variables take integer values. Thus HiGHS can
