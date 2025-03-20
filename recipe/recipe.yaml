@@ -9,7 +9,7 @@ package:
 source:
   # url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/highspy-{{ version }}.tar.gz
   url: https://github.com/ERGO-Code/HiGHS/archive/refs/tags/v${{ version }}.tar.gz
-  sha256: dff575df08d88583c109702c7c5c75ff6e51611e6eacca8b5b3fdfba8ecc2cb4
+  sha256: 89de8ebba1429939b7e3425ee951af24a4cb0f90075a3d8258c10b190d2681a4
   patches:
     - patches/0001-Got-error-about-missing-std-tolower-on-MSVC.patch
 
