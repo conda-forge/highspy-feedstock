@@ -34,7 +34,7 @@ requirements:
     - numpy
     - pybind11
   run:
-    - python >=3.8
+    - python
     - numpy
 
 test:
