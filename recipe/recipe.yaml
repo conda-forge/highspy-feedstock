@@ -50,10 +50,11 @@ tests:
         - highspy
       pip_check: true
   - script:
-      - python -m unittest tests/test_highspy.py
+      - python -m pytest tests/test_highspy.py
     requirements:
       run:
         - python
+        - pytest
     files:
       source:
         - tests/
