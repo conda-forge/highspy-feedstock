@@ -1,5 +1,6 @@
 {% set name = "highspy" %}
 {% set version = "1.7.2" %}
+{% set python_min = "3.8" %}
 
 package:
   name: {{ name|lower }}
@@ -34,7 +35,7 @@ requirements:
     - numpy
     - pybind11
   run:
-    - python
+    - python >={{ python_min }}
     - numpy
 
 test:
@@ -43,9 +44,10 @@ test:
   imports:
     - highspy
   commands:
-    - python -m unittest tests/test_highspy.py
+    - python -m pytest tests/test_highspy.py
   requires:
     - pip
+    - pytest
   commands:
     - pip check
 
