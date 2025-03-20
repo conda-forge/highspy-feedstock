@@ -312,4 +312,5 @@ Feedstock Maintainers
 =====================
 
 * [@adament](https://github.com/adament/)
+* [@galabovaa](https://github.com/galabovaa/)
 
