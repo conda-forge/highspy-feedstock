@@ -2,14 +2,16 @@ context:
   name: highspy
   version: "1.13.2.dev0"
 
-package:
+recipe:
   name: ${{ name|lower }}
   version: ${{ version }}
 
 source:
   # url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/highspy-{{ version }}.tar.gz
-  url: https://github.com/ERGO-Code/HiGHS/archive/refs/heads/py-l2.tar.gz
-  sha256: 1d703ff34ac2f630385c9de663ccb3326c4a01a718c2b25ccf4f4d11c9741863
+  # url: https://github.com/ERGO-Code/HiGHS/archive/refs/heads/py-l2.tar.gz
+  # sha256: 1d703ff34ac2f630385c9de663ccb3326c4a01a718c2b25ccf4f4d11c9741863
+  git_url: https://github.com/ERGO-Code/HiGHS
+  git_rev: 6c84fd0f2fafd0f09c99ba267188daf597ed86cd # or a specific commit hash
 
 outputs:
   - package:
