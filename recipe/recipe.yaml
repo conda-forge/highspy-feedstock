@@ -1,6 +1,6 @@
 context:
   name: highspy
-  version: "1.13.2.dev1"
+  version: "1.13.2.dev0"
 
 package:
   name: ${{ name|lower }}
@@ -15,8 +15,15 @@ source:
 
 build:
   number: 0
-  script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-        --config-settings=cmake.define.HIPO=ON
+  script:
+  - if: win
+    then: >-
+      ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+      --config-settings=cmake.define.HIPO=ON
+      --config-settings=cmake.define.BUILD_OPENBLAS=ON
+    else: >-
+      ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+      --config-settings=cmake.define.HIPO=ON
 
 requirements:
   build:
@@ -37,7 +44,7 @@ requirements:
     - scikit-build-core
     - numpy
     - pybind11
-    - if: not osx
+    - if: unix and not osx
       then : openblas
   run:
     - python
