@@ -1,6 +1,6 @@
 context:
   name: highspy
-  version: "1.13.1"
+  version: "1.13.2.dev1"
 
 package:
   name: ${{ name|lower }}
@@ -8,12 +8,15 @@ package:
 
 source:
   # url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/highspy-{{ version }}.tar.gz
-  url: https://github.com/ERGO-Code/HiGHS/archive/refs/tags/v${{ version }}.tar.gz
-  sha256: d491448e585dbf08cd8945ca5dcbbe3b784d73b9c68eea4e7456274619d56164
+  # url: https://github.com/ERGO-Code/HiGHS/archive/refs/tags/v${{ version }}.tar.gz
+  # sha256: d491448e585dbf08cd8945ca5dcbbe3b784d73b9c68eea4e7456274619d56164
+  git: https://github.com/ERGO-Code/HiGHS
+  rev: 6c84fd0f2fafd0f09c99ba267188daf597ed86cd # or a specific commit hash
 
 build:
   number: 0
   script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+        --config-settings=cmake.define.HIPO=ON
 
 requirements:
   build:
@@ -34,6 +37,8 @@ requirements:
     - scikit-build-core
     - numpy
     - pybind11
+    - if: not osx
+      then : openblas
   run:
     - python
     - numpy
@@ -47,7 +52,7 @@ tests:
         - highspy
       pip_check: true
   - script:
-      - python -m pytest tests/test_highspy.py
+      - python -m pytest tests/test_highspy.py check/test_highspy_hipo.py
     requirements:
       run:
         - python
@@ -55,6 +60,7 @@ tests:
     files:
       source:
         - tests/
+        - check/
 
 about:
   summary: High performance serial and parallel solver for large scale sparse linear optimization problems
