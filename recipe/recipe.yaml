@@ -65,7 +65,7 @@ outputs:
       number: 0
       script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
         --config-settings=cmake.define.HIPO=ON
-        --config-settings=cmake.define.BUILD_OPENBLAS=ON
+        # --config-settings=cmake.define.BUILD_OPENBLAS=ON
     requirements:
       build:
         - if: build_platform != target_platform
@@ -85,6 +85,8 @@ outputs:
         - scikit-build-core
         - numpy
         - pybind11
+        - if: not osx
+          then : openblas
       run:
         - python
         - numpy
