@@ -1,6 +1,6 @@
 context:
   name: highspy
-  version: "1.14.0"
+  version: "1.15.0"
 
 package:
   name: ${{ name|lower }}
@@ -9,7 +9,7 @@ package:
 source:
   # url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/highspy-{{ version }}.tar.gz
   url: https://github.com/ERGO-Code/HiGHS/archive/refs/tags/v${{ version }}.tar.gz
-  sha256: 05931e8dd8c8cac514da8297003c31a206a0004d542b7da500810b85c87c20b9
+  sha256: c3fc3e9ee43e6d562361f8647b4c69f958c95356a1af8bc5a3647f5882230d44
 
 build:
   number: 0
