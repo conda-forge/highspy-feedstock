@@ -1,9 +1,8 @@
 context:
-  name: highspy
   version: "1.15.1"
 
-package:
-  name: ${{ name|lower }}
+recipe:
+  name: highspy
   version: ${{ version }}
 
 source:
@@ -13,48 +12,122 @@ source:
 
 build:
   number: 0
-  script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
-requirements:
-  build:
-    - if: build_platform != target_platform
-      then:
-        - python
-        - cross-python_${{ target_platform }}
-        - numpy
-    - ${{ compiler('c') }}
-    - ${{ stdlib('c') }}
-    - ${{ compiler('cxx') }}
-    - cmake
-    - if: unix
-      then: make
-  host:
-    - python
-    - pip
-    - scikit-build-core
-    - numpy
-    - pybind11
-  run:
-    - python
-    - numpy
-  ignore_run_exports:
-    from_package:
-      - numpy
-
-tests:
-  - python:
-      imports:
-        - highspy
-      pip_check: true
-  - script:
-      - python -m pytest tests/test_highspy.py
+outputs:
+  - package:
+      name: highspy
+      version: ${{ version }}
     requirements:
+      build:
+        - if: build_platform != target_platform
+          then:
+            - python
+            - cross-python_${{ target_platform }}
+            - numpy
+        - ${{ compiler('c') }}
+        - ${{ stdlib('c') }}
+        - ${{ compiler('cxx') }}
+        - cmake
+        - if: unix
+          then: make
+      host:
+        - python
+        - pip
+        - scikit-build-core
+        - numpy
+        - pybind11
       run:
         - python
-        - pytest
-    files:
-      source:
-        - tests/
+        - numpy
+      ignore_run_exports:
+        from_package:
+          - numpy
+    build:
+      script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+    tests:
+      - python:
+          imports:
+            - highspy
+          pip_check: true
+      - script:
+          - python -m pytest highspy/tests/test_highspy.py
+        requirements:
+          run:
+            - python
+            - pytest
+        files:
+          source:
+            - highspy/tests/
+    about:
+      license: MIT
+      license_file: LICENSE.txt
+  - package:
+      name: highspy-extras
+      version: ${{ version }}
+    requirements:
+      build:
+        - if: build_platform != target_platform
+          then:
+            - python
+            - cross-python_${{ target_platform }}
+            - numpy
+        - ${{ compiler('c') }}
+        - ${{ stdlib('c') }}
+        - ${{ compiler('cxx') }}
+        - cmake
+        - if: unix
+          then: make
+      host:
+        - python
+        - pip
+        - scikit-build-core
+        - numpy
+        - pybind11
+        - if: not osx
+          then: openblas
+        - if: not osx
+          then: libopenblas
+      run:
+        - python
+        - numpy
+      ignore_run_exports:
+        from_package:
+          - numpy
+    build:
+      script: ${{ PYTHON }} -m pip install ./highspy-extras --config-settings=cmake.define.BUILD_OPENBLAS=OFF -vv --no-deps --no-build-isolation
+    tests:
+      - python:
+          imports:
+            - highspy_extras
+          pip_check: true
+      - script:
+          - python -m pytest highspy-extras/tests/test_highspy_extras.py
+        requirements:
+          run:
+            - python
+            - pytest
+        files:
+          source:
+            - highspy-extras/tests/
+      - script:
+          interpreter: python
+          content: |
+            import highspy
+            h = highspy.Highs()
+            h.readModel("check/instances/afiro.mps")
+            h.setOptionValue("solver", "hipo")
+            h.run()
+            assert h.getModelStatus() == highspy.HighsModelStatus.kOptimal
+        files:
+          source:
+            - check/instances/afiro.mps
+        requirements:
+          run:
+          - python
+          - highspy
+    about:
+      license: Apache-2.0 AND BSD-3-Clause
+      license_file: highspy-extras/THIRD_PARTY_NOTICES.md
 
 about:
   summary: High performance serial and parallel solver for large scale sparse linear optimization problems
@@ -70,11 +143,11 @@ about:
     problems, and mixed integer programming (MIP) problems. It is mainly written in
     C++, but also has some C. It has been developed and tested on various Linux,
     MacOS and Windows installations.
-  license: MIT
-  license_file: LICENSE.txt
   homepage: https://github.com/ERGO-Code/HiGHS
   repository: https://github.com/ERGO-Code/HiGHS
   documentation: https://ergo-code.github.io/HiGHS/stable/
+  license: MIT
+  license_file: LICENSE.txt
 
 extra:
   recipe-maintainers:
