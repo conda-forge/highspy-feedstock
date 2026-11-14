@@ -12,6 +12,7 @@ source:
 
 build:
   number: 0
+  skip: linux and ppc64le and is_freethreading and match(python, "3.14")
 
 outputs:
   - package:
